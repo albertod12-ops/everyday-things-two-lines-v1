@@ -24,6 +24,10 @@ def main():
     lines = ENTRY.split("\n")
     assert len(lines) == 2, len(lines)
     assert all(line.strip() for line in lines)
+    # Each line must be exactly one sentence: no second sentence hiding
+    # behind an extra full stop mid-line.
+    assert all(line.rstrip().endswith(".") and line.count(".") == 1
+               for line in lines)
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
         f.write(ENTRY)
